@@ -12,17 +12,79 @@ class DoublyLinkedList {
         this.tail = null;
     }
 
-    setNext(item) {
+    getCurrent(number) {
         let current = this.head;
-        while (current !== null) {
-            if (current.next.next === null) {
-                return this.append(item);
-            } else {
-                current = current.next;
-            }
+        if (number === 0 || number === null) {
+            return current;
         }
 
+        while (current !== null) {
+            if (current.data === number) {
+                this.current = current;
+                break;
+            } else {
+                this.current = null;
+            }
+            current = current.next
+        }
+        return this.current;
     }
+    setNext(item) {
+        if (this.tail !== null) {
+            return this.append(item);
+        }
+    }
+
+    setPrev(item) {
+        if (this.head !== null) {
+            return this.appendAt(0, item);
+        }
+    }
+
+    getNextByItem(item) {
+        let current = this.head;
+        if (item === 0 || item === null) {
+            return current.next;
+        }
+        while (current !== null) {
+            if (current.data === item) {
+                this.next = current.next;
+                break;
+            } else {
+                this.next = null;
+            }
+            current = current.next
+        }
+        return this.next;
+    }
+
+    getPrevByItem(item) {
+        let current = this.head;
+        if (item === 0 || item === null) {
+            return current.prev;
+        }
+        while (current !== null) {
+            if (current.data === item) {
+                this.prev = current.prev;
+                break;
+            } else {
+                this.prev = null;
+            }
+            current = current.next
+        }
+        return this.prev;
+    }
+
+    getNext() {
+        let node = new Node();
+        return node.next;
+    }
+    getPrev() {
+        let node = new Node();
+        return node.prev;
+    }
+
+
     append(item) {
         let node = new Node(item);
 
