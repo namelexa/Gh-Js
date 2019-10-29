@@ -4,6 +4,7 @@ createMessage = (message) => {
     messageArray.forEach((messageItem, messageIndex) => {
 
         const buttonsAlphabet = [
+            [' '],
             ['a', 'b', 'c'],
             ['d', 'e', 'f'],
             ['g', 'h', 'i'],
@@ -12,11 +13,9 @@ createMessage = (message) => {
             ['p', 'q', 'r', 's'],
             ['t', 'u', 'v'],
             ['w', 'x', 'y', 'z'],
-            [' ']
         ];
 
         buttonsAlphabet.forEach((buttonItem, buttonNumber) => {
-            buttonNumber = buttonNumber + 1;
             buttonItem.forEach((letter, letterIndex) => {
                 let countClicks = letterIndex + 1;
                 if (messageItem === letter) {
