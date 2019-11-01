@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="try_drug" style="font-size: 22px; text-align: center; margin-top: 10px; font-family: sans-serif;"></div>
+<div id="ball" style="width: 60px;height: 60px;position: absolute;background: green; border-radius: 50%"></div>
+<script>
+    let elemLeft, elemTop, maxElemLeft, maxElemTop, elem;
+    // let text = !canDrug() ? 'Please try to drug this ball' : 'Okay, Last chance :)';
+    // document.body.append(text);
+
+
+
+    elem = document.getElementById('ball');
+
+    maxElemLeft = document.documentElement.clientWidth - elem.offsetWidth;
+    maxElemTop = document.documentElement.clientHeight - elem.offsetHeight;
+
+    elem.onmousemove = moveBall;
+
+    function moveBall(e) {
+        elemLeft = Math.random() * maxElemLeft;
+        elem.style.left = elemLeft + 'px';
+        elemTop = Math.random() * maxElemTop;
+        elem.style.top = elemTop + 'px';
+        let canDrug = () =>{
+            let e = e.returnValue
+            while (e.returnValue == 5) {
+                if (e.returnValue == 5) {
+                    return true;
+                }
+            }
+        }
+        //console.log(elemLeft+' - '+elemTop);
+    }
+
+</script>
+</body>
+</html>
