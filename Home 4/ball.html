@@ -3,40 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #ball {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            background: green;
+            border-radius: 50%;
+            left: 21.2868px;
+            top: 341.157px;
+            font-size: 35px;
+        }
+
+        #can-drug {
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 22px;
+        }
+    </style>
 </head>
 <body>
-<div id="try_drug" style="font-size: 22px; text-align: center; margin-top: 10px; font-family: sans-serif;"></div>
-<div id="ball" style="width: 60px;height: 60px;position: absolute;background: green; border-radius: 50%"></div>
+<div id="ball">☝</div>
+<div id="can-drug">Try to drug the ball</div>
 <script>
     let elemLeft, elemTop, maxElemLeft, maxElemTop, elem;
-    // let text = !canDrug() ? 'Please try to drug this ball' : 'Okay, Last chance :)';
-    // document.body.append(text);
-
-
 
     elem = document.getElementById('ball');
 
     maxElemLeft = document.documentElement.clientWidth - elem.offsetWidth;
     maxElemTop = document.documentElement.clientHeight - elem.offsetHeight;
-
     elem.onmousemove = moveBall;
 
+    let eventCount = 1;
+    let startCounter = 5;
+
     function moveBall(e) {
-        elemLeft = Math.random() * maxElemLeft;
-        elem.style.left = elemLeft + 'px';
-        elemTop = Math.random() * maxElemTop;
-        elem.style.top = elemTop + 'px';
-        let canDrug = () =>{
-            let e = e.returnValue
-            while (e.returnValue == 5) {
-                if (e.returnValue == 5) {
-                    return true;
+        this.counter = eventCount++;
+        if (this.counter <= 5) {
+
+            elemLeft = Math.random() * maxElemLeft;
+            elem.style.left = elemLeft + 'px';
+            elemTop = Math.random() * maxElemTop;
+            elem.style.top = elemTop + 'px';
+
+            let canDrug = () => {
+
+                while (this.counter <= 5) {
+                    document.getElementById('can-drug').innerText = startCounter - this.counter;
+                    if (this.counter === 1) {
+                        return '😲'
+                    } else if (this.counter === 2) {
+                        return '🤨';
+                    } else if (this.counter === 3) {
+                        return '🥺'
+                    } else if (this.counter === 4) {
+                        return '😡'
+                    } else if (this.counter === 5) {
+                        return '😎';
+                    }
                 }
+            };
+            e.target.innerText = canDrug();
+            if (this.counter === 5) {
+                document.getElementById('can-drug').innerText = 'Now you can drug the ball!';
+            }
+        } else {
+            let ball = e.target;
+
+            ball.onmousedown = (e) => {
+
+                let coords = getCoords(ball);
+                let shiftX = e.pageX - coords.left;
+                let shiftY = e.pageY - coords.top;
+
+                ball.style.position = 'absolute';
+                document.body.appendChild(ball);
+                moveAt(e);
+
+                ball.style.zIndex = 1000;
+
+                function moveAt(e) {
+                    ball.style.left = e.pageX - shiftX + 'px';
+                    ball.style.top = e.pageY - shiftY + 'px';
+                }
+
+                document.onmousemove = (e) => {
+                    moveAt(e);
+                };
+
+                ball.onmouseup = () => {
+                    document.onmousemove = null;
+                    ball.onmouseup = null;
+                };
+
+            };
+
+            ball.ondragstart = () => false;
+
+            function getCoords(elem) {
+                let box = elem.getBoundingClientRect();
+                return {
+                    top: box.top + pageYOffset,
+                    left: box.left + pageXOffset
+                };
             }
         }
-        //console.log(elemLeft+' - '+elemTop);
     }
-
 </script>
 </body>
 </html>
