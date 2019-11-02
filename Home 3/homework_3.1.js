@@ -4,6 +4,75 @@ class Node {
         this.next = null;
         this.prev = null;
     }
+
+    setNext(el) {
+        this.next = el
+    }
+
+    setPrev(el) {
+        this.prev = el
+    }
+
+    getNext() {
+        return this.next
+    }
+
+    getPrev() {
+        return this.prev
+    }
+
+    setData(data) {
+        this.data = data
+    }
+
+    cut() {
+        if (this.data !== null) {
+            this.prev.setNext(this.next);
+            this.next.setPrev(this.prev);
+            this.next = null;
+            this.prev = null;
+            this.data = null;
+        }
+    }
+
+    swap(el) {
+        let next = this.next;
+        let prev = this.prev;
+        if (el.data === this.data) {
+            console.log("ERROR");
+            return false;
+        }
+        if (el < 0 || this.data < 0) {
+            console.log("ERROR");
+            return false;
+        }
+
+        if (this.prev !== null) {
+            this.prev.setNext(el);
+        }
+        if (el.next !== null) {
+            el.next.setPrev(this)
+        }
+
+        if (this.next === el) {
+            this.setNext(el.getNext());
+            this.setPrev(el);
+            el.setNext(this);
+            el.setPrev(this.prev);
+        } else {
+            this.setNext(el.getNext());
+            this.setPrev(el.getPrev());
+            if (this.prev !== null) {
+                this.prev.setNext(this)
+            }
+            el.setNext(this.next);
+            el.setPrev(this.prev);
+            if (el.next !== null) {
+                el.next.setPrev(el)
+            }
+        }
+
+    }
 }
 
 class DoublyLinkedList {
@@ -29,6 +98,7 @@ class DoublyLinkedList {
         }
         return this.current;
     }
+
     setNext(item) {
         if (this.tail !== null) {
             return this.append(item);
@@ -79,6 +149,7 @@ class DoublyLinkedList {
         let node = new Node();
         return node.next;
     }
+
     getPrev() {
         let node = new Node();
         return node.prev;
@@ -120,7 +191,7 @@ class DoublyLinkedList {
         }
     }
 
-    remove(item) {
+    cut(item) {
         let current = this.head;
         while (current) {
             if (current.data === item) {
@@ -187,12 +258,12 @@ class DoublyLinkedList {
 
     display() {
         let current = this.head;
-        let elements = [];
+        let elements = {};
         while (current !== null) {
-            elements.push(current.data);
+            elements['node' + current.data] = current;
             current = current.next
         }
-        return elements.join(" ");
+        return elements;
     }
 }
 
