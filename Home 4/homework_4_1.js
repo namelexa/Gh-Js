@@ -3,18 +3,19 @@ function privateMethods(height, width) {
     let _height = height;
     let _width = width;
 
-    return function () {
-        let getHeight = () => {
+    return  {
+        getHeight() {
             return _height;
-        };
-        let getWidth = () => {
+        },
+        getWidth() {
             return _width;
-        };
-        let setHeight = (newHeight) => {
+        },
+        setHeight(newHeight) {
             _height = newHeight;
-        };
-        let setWidth = (newWidth) => {
+        },
+        setWidth(newWidth) {
             _width = newWidth;
-        };
+        }
     };
 }
+let sizes = privateMethods(10 ,20)
