@@ -1,13 +1,13 @@
 /* myForEach */
 let arr = [1, 2, 3];
 
-function myForEach(arr, callback) {
+Array.prototype.myForEach = function(callback) {
     for (let i = 0; i < arr.length; i++) {
         callback(arr[i]);
     }
-}
+};
 
-myForEach(arr, function(item) {
+arr.myForEach(function(item) {
     console.log('myForeach', item);
 });
 
@@ -29,13 +29,17 @@ console.log('newArray', newArray);
 let badSort = [3, 8, 51, 5, 1, 4, 2];
 
 console.log('badSortArray', badSort);
-badSort.sort(function(x, y) {
-    if (x < y) {
-        return -1;
+Array.prototype.mySort = function (callback){
+    for(let i =0;i<badSort.length;i++){
+        for(let j= i+1;j<badSort.length;j++){
+            if(badSort[i]>badSort[j]){
+                let swap = badSort[i];
+                badSort[i] = badSort[j];
+                badSort[j] = swap;
+            }
+        }
     }
-    if (x > y) {
-        return 1;
-    }
-    return 0;
-});
-console.log('goodSort', badSort);
+    return badSort;
+};
+
+console.log('goodSort', badSort.mySort());
