@@ -31,12 +31,12 @@
 <div id="ball">☝</div>
 <div id="can-drug">Try to drug the ball</div>
 <script>
-    let elemLeft, elemTop, maxElemLeft, maxElemTop, elem;
+    let elemLeft, elemTop;
 
-    elem = document.getElementById('ball');
+    const elem = document.getElementById('ball');
 
-    maxElemLeft = document.documentElement.clientWidth - elem.offsetWidth;
-    maxElemTop = document.documentElement.clientHeight - elem.offsetHeight;
+    const maxElemLeft = document.documentElement.clientWidth - elem.offsetWidth;
+    const maxElemTop = document.documentElement.clientHeight - elem.offsetHeight;
     elem.onmousemove = moveBall;
 
     let eventCount = 1;
@@ -51,10 +51,10 @@
             elemTop = Math.random() * maxElemTop;
             elem.style.top = elemTop + 'px';
 
-            let canDrug = () => {
-
+            let canDugElement = 'can-drug';
+            const canDrug = () => {
                 while (this.counter <= 5) {
-                    document.getElementById('can-drug').innerText = startCounter - this.counter;
+                    document.getElementById(canDugElement).innerText = startCounter - this.counter;
                     if (this.counter === 1) {
                         return '😲'
                     } else if (this.counter === 2) {
@@ -68,9 +68,9 @@
                     }
                 }
             };
-            e.target.innerText = canDrug();
+            e.target.innerText = canDrug(canDugElement);
             if (this.counter === 5) {
-                document.getElementById('can-drug').innerText = 'Now you can drug the ball!';
+                document.getElementById(canDugElement).innerText = 'Now you can drug the ball!';
             }
         } else {
             let ball = e.target;
